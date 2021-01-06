@@ -4,23 +4,19 @@ using UnityEngine;
 
 public class door : VoiceInteractable
 {
-
-  
-  
-
-   
-
-    public override void VoiceInteract(string action)
+      
+     
+       bool respuesta=false;
+       public override void VoiceInteract(string action)
        {
-          
         if(action=="open")
         {
-        Destroy(gameObject);
+          Debug.Log("lo hemos logrado");
         }
        
 
        }
-      
        
-        
-    }
+
+     
+}

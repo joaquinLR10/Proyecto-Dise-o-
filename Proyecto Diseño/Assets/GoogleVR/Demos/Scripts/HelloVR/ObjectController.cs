@@ -20,6 +20,9 @@ namespace GoogleVR.HelloVR
 {
     using UnityEngine;
     using UnityEngine.EventSystems;
+    using IBM.Watsson.Examples;
+    using System.Collections;
+    using System.Collections.Generic;
 
     /// <summary>Controls interactable teleporting objects in the Demo scene.</summary>
     [RequireComponent(typeof(Collider))]
@@ -32,7 +35,7 @@ namespace GoogleVR.HelloVR
 
         /// <summary>The material to use when this object is active (gazed at).</summary>
         public Material gazedAtMaterial;
-
+        public  door Door=new door();
         private Vector3 startingPosition;
         private Renderer myRenderer;
         private Locomotion locomotion;
@@ -40,12 +43,14 @@ namespace GoogleVR.HelloVR
         public float triggerInteractionTime = 2f;
         public float interactionTimer = 0f;
         private bool timerRunning= false;
-
+        private VoiceCommandProcessor commandProcessor;
+         private Transform position=null;
         void Update()
         {
             if(timerRunning)
             {
                 interactionTimer += Time.deltaTime;
+                
                 if(interactionTimer > triggerInteractionTime&&CompareTag("Respawn"))
                 {
                     TeleportPlayer();
@@ -55,6 +60,21 @@ namespace GoogleVR.HelloVR
             }
             
         }
+         
+
+
+    public virtual void VoiceInteract(string action)
+    {
+        
+        if(timerRunning&&action=="open")
+        {
+           
+       Debug.Log(gameObject.transform.position);
+        }
+    }
+
+    
+
 
         /// <summary>Sets this instance's GazedAt state.</summary>
         /// <param name="gazedAt">
@@ -79,6 +99,7 @@ namespace GoogleVR.HelloVR
                 return;
             }
         }
+
 
         /// <summary>Resets this instance and its siblings to their starting positions.</summary>
         public void Reset()
@@ -149,10 +170,13 @@ namespace GoogleVR.HelloVR
 
         private void Start()
         {
-            startingPosition = transform.localPosition;
-            myRenderer = GetComponent<Renderer>();
-            locomotion = FindObjectOfType<Locomotion>();
-            SetGazedAt(false);
+        commandProcessor = VoiceCommandProcessor.Instance;
+        commandProcessor.onVoiceCommand += VoiceInteract;
+        startingPosition = transform.localPosition;
+         myRenderer = GetComponent<Renderer>();
+         locomotion = FindObjectOfType<Locomotion>();
+        SetGazedAt(false);
+      
         }
         public void TeleportPlayer()
         {

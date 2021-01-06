@@ -5,25 +5,32 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class Interactable : MonoBehaviour
+public class Interactable : VoiceInteractable
 {
     bool isInsideZone = false;
-   
+    bool action=false;
 
-    public virtual void Interact()
+    public virtual void Interact(string action)
     {
-        
-        Debug.Log("Ejecutando interacción...");
-      
-        Destroy(gameObject);
+        VoiceInteract(action);
     }
+      public override void VoiceInteract(string action)
+       {
+          
+        if(action=="open")
+        {
+        Destroy(gameObject);
+        }
+       
 
-    void Update()
+       }
+
+    void Update(string action)
     {
        // Input.GetKeyDown(KeyCode.I)
         if(isInsideZone)
         {
-            Interact();
+           Interact(action);
         }
     }
 
