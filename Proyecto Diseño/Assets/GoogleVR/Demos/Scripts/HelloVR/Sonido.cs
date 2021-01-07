@@ -8,15 +8,15 @@ public class Sonido : MonoBehaviour
    public float volumen = 1.0f;//indica el volumen del sonido 
    protected Transform posicion = null;
    
-    void Start()
+    public void Start()
     {
         posicion= transform;
     }
 
    
    
-    void update(){
-        if(CompareTag("Ham"))
+   public void update(){
+    if(CompareTag("elsinhueso"))
         {
        if(sonido)
        AudioSource.PlayClipAtPoint(sonido,posicion.position,volumen);

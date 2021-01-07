@@ -39,8 +39,10 @@ namespace GoogleVR.HelloVR
         private Vector3 startingPosition;
         private Renderer myRenderer;
         private Locomotion locomotion;
+        public Sonido sd ;
         public Interactable interactable;
         public float triggerInteractionTime = 2f;
+        public float triggerdead =0.5f;
         public float interactionTimer = 0f;
         private bool timerRunning= false;
         private VoiceCommandProcessor commandProcessor;
@@ -54,6 +56,9 @@ namespace GoogleVR.HelloVR
                 if(interactionTimer > triggerInteractionTime&&CompareTag("Respawn"))
                 {
                     TeleportPlayer();
+                }
+                if(interactionTimer > triggerdead&&CompareTag("elsinhueso")){
+                    sd.update();
                 }
               
                
@@ -170,6 +175,7 @@ namespace GoogleVR.HelloVR
 
         private void Start()
         {
+        sd.Start();    
         commandProcessor = VoiceCommandProcessor.Instance;
         commandProcessor.onVoiceCommand += VoiceInteract;
         startingPosition = transform.localPosition;
